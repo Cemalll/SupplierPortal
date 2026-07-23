@@ -17,7 +17,7 @@ Record only decisions that are expensive to change, affect multiple modules, or 
 
 | ID | Decision | Priority | Status |
 |---|---|---:|---|
-| M18-01 | Initial User Types | P0 | OPEN |
+| M18-01 | Initial User Types | P0 | PROPOSED |
 | M18-02 | Tenant Definition | P0 | OPEN |
 | M18-03 | Multi-Organization Membership | P0 | OPEN |
 | M18-04 | Legal Entity and Branch Model | P0 | OPEN |
@@ -67,13 +67,13 @@ Record only decisions that are expensive to change, affect multiple modules, or 
 
 ## M18-01 — Initial User Types
 
-- **Status:** OPEN
+- **Status:** PROPOSED
 - **Priority:** P0
 - **Decision owner:**
 - **Decision date:**
 - **Review date:**
 - **Related modules:** All modules
-- **Source of truth:**
+- **Source of truth:** PORTAL
 
 ### Context
 
@@ -81,11 +81,11 @@ Define which actor groups can access the first release.
 
 ### Decision Question
 
-Which user types will exist in the MVP?
+Which roles and identity types will exist in the MVP?
 
 ### Options Considered
 
-1. System Admin
+1. Portal Admin
 2. Buyer
 3. Buyer Manager
 4. Quality User
@@ -96,22 +96,31 @@ Which user types will exist in the MVP?
 9. Integration identity
 
 ### Decision
+The system will support the following roles and identity types:
+1.Portal Admin
+2.Integration Identity
+3.Auditor
+4.Buyer
+5.Approver
+6.Finance User    
+7.Quality User
+8.Supplier Admin    
+9.Supplier User
 
-_To be completed._
 
 ### Rationale
 
-_To be completed._
+These roles are neccesary to manage a supplier portal.
 
 ### Consequences
 
 #### Positive
 
-- To be completed.
+- The roles are enough for MVP
 
 #### Negative / Trade-offs
 
-- To be completed.
+- There are no roles such as warehouse admin, purchasing manager. It could increase count of permission type.
 
 ### Exceptions
 
@@ -194,7 +203,7 @@ _To be completed._
 
 ## M18-03 — Multi-Organization Membership
 
-- **Status:** OPEN
+- **Status:** PROPOSED
 - **Priority:** P0
 - **Decision owner:**
 - **Decision date:**
@@ -218,7 +227,7 @@ Can one identity belong to more than one organization?
 
 ### Decision
 
-_To be completed._
+One identity may have multiple memberships
 
 ### Rationale
 
@@ -254,7 +263,7 @@ _To be completed._
 
 ## M18-04 — Legal Entity and Branch Model
 
-- **Status:** OPEN
+- **Status:** PROPOSED
 - **Priority:** P0
 - **Decision owner:**
 - **Decision date:**
@@ -279,7 +288,7 @@ How will supplier groups, legal entities, and branches be represented?
 
 ### Decision
 
-_To be completed._
+Legal entities are separate and branches are child units
 
 ### Rationale
 
@@ -378,7 +387,7 @@ _To be completed._
 
 ## M18-06 — User and Organization Source of Truth
 
-- **Status:** OPEN
+- **Status:** PROPOSED
 - **Priority:** P0
 - **Decision owner:**
 - **Decision date:**
@@ -403,7 +412,7 @@ Which system owns each user, organization, role, department, and business-unit f
 
 ### Decision
 
-_To be completed._
+Portal owns all
 
 ### Rationale
 
