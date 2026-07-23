@@ -100,7 +100,7 @@ If this file is handed to an AI (or a human) to implement code, the following ru
 | M18-42 | Production Administrative Access | P1 | ACCEPTED |
 | M18-43 | Compromised-Account Response | P1 | ACCEPTED |
 | M18-44 | Module 18 MVP Scope | P0 | ACCEPTED |
-| M18-45 | First Vertical Slice | P0 | ACCEPTED |
+| M18-45 | First Vertical Slice | P1 | ACCEPTED |
 
 ---
 
@@ -1049,7 +1049,7 @@ MVP
 ## M18-45 — First Vertical Slice
 
 - **Status:** ACCEPTED
-- **Priority:** P0
+- **Priority:** P1
 - **Related modules:** Supplier Invitation, Authentication, Authorization, Audit
 
 ### Decision
