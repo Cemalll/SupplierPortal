@@ -1,0 +1,52 @@
+flowchart TD
+    A["Kazanan seçimi onaylandı"] --> B{"RFQ satın alma türü"}
+
+    B -->|Tek seferlik satın alma| C["Her tedarikçi için sipariş oluştur"]
+    B -->|Anlaşma bazlı satın alma| D["Her tedarikçi için satın alma anlaşması oluştur"]
+    D --> E["Anlaşmaya bağlı sipariş oluştur"]
+
+    C --> F["Sipariş yayınlama öncesi sistem kontrolü"]
+    E --> F
+
+    F --> G{"Kontroller başarılı mı?"}
+    G -->|Hayır| H["Buyer eksik veya hatalı bilgileri düzeltir"]
+    H --> F
+    G -->|Evet| I["Sipariş tedarikçiye gönderilir"]
+
+    J["Kural tabanlı kontroller:<br/>zorunlu alanlar, fiyat ve miktar,<br/>anlaşma koşulları, teslim tarihi"] -.-> F
+
+    I --> K["Tedarikçi siparişi inceler"]
+    K --> L{"Sipariş teyidi"}
+
+    L -->|Kabul| M["Sipariş kabul edildi ve açık duruma geçti"]
+    L -->|Ret| N["Ret nedeni Buyer'a iletilir"]
+    N --> O{"Buyer kararı"}
+    O -->|Düzelt ve yeniden gönder| H
+    O -->|İptal et| P["Sipariş iptal edilir"]
+
+    M --> Q["Temel sipariş durum takibi"]
+    Q --> R["Kural tabanlı tarih bildirimleri"]
+    R --> S{"Teslim durumu"}
+    S -->|Teslim tarihi yaklaşıyor| T["Hatırlatma bildirimi gönderilir"]
+    S -->|Teslim tarihi geçti ve sipariş açık| U["Gecikme bildirimi oluşturulur"]
+    S -->|Tamamlandı| V["Sipariş tamamlanır"]
+
+    W["Gelecek faz AI desteği:<br/>geçmiş tedarikçi performansı ve güncel verilerle<br/>teslim tarihi gelmeden gecikme riski tahmini"] -.-> Q
+    X["AI yalnız öngörü ve uyarı üretir;<br/>operasyonel karar kullanıcıdadır"] -.-> W
+
+    Y["MVP kapsamı:<br/>sipariş oluşturma, gönderme,<br/>teyit ve temel durum takibi"] -.-> I
+    Z["Kapsam dışında:<br/>sevkiyat, ASN, mal kabul,<br/>fatura ve ödeme"] -.-> Q
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef rule fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    classDef ai fill:#FCE7F3,stroke:#DB2777,color:#831843
+    classDef end fill:#DCFCE7,stroke:#16A34A,color:#14532D
+    classDef reject fill:#FEE2E2,stroke:#DC2626,color:#7F1D1D
+
+    class A,C,D,E,F,H,I,K,M,N,Q,R,T,U process
+    class B,G,L,O,S decision
+    class J,Y,Z rule
+    class W,X ai
+    class V end
+    class P reject
