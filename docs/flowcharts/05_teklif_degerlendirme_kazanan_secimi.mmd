@@ -1,0 +1,27 @@
+flowchart TD
+    A[Teklifler değerlendirmeye açılır] --> B{Değerlendirme yöntemi}
+    B -->|Basit| C[Fiyat, teslimat ve ticari koşulları karşılaştır]
+    B -->|Ağırlıklı| D[Kilitli kriterlere göre puanla]
+    C --> E[Kalem bazında uygun tedarikçiyi seç]
+    D --> E
+
+    E --> F{Kalem bölünecek mi?}
+    F -->|Hayır| G[Kalemin tamamını tek tedarikçiye ata]
+    F -->|Evet| H[Miktarı birden fazla tedarikçiye dağıt]
+    G --> I[Dağılımı doğrula]
+    H --> I
+
+    I --> J{Toplam miktar doğru mu?}
+    J -->|Hayır| K[Eksik veya fazla dağılım uyarısı] --> E
+    J -->|Evet| L[Tedarikçi bazında sonuç oluştur]
+    L --> M[Seçim sonucunu onaya gönder]
+
+    AI[AI desteği:<br/>Teklif özeti, fark analizi,<br/>olağan dışı koşul uyarısı]
+    AI -. "Öneri üretir; nihai seçim kullanıcıdadır" .-> E
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef ai fill:#FCE7F3,stroke:#DB2777,color:#831843
+    class A,C,D,E,G,H,I,K,L,M process
+    class B,F,J decision
+    class AI ai

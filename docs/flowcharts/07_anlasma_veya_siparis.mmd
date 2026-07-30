@@ -1,0 +1,25 @@
+flowchart TD
+    A[Kazanan seçim onaylandı] --> B{RFQ satın alma türü}
+
+    B -->|Tek seferlik satın alma| C[Her Supplier için sipariş oluştur]
+    B -->|Anlaşma bazlı satın alma| D[Her Supplier için satın alma anlaşması oluştur]
+    D --> E[Anlaşmaya bağlı bir veya daha fazla sipariş oluştur]
+
+    C --> F[Siparişi tedarikçiye gönder]
+    E --> F
+    F --> G[Tedarikçi siparişi inceler]
+    G --> H{Tedarikçi cevabı}
+    H -->|Kabul| I[Sipariş açık / kabul edildi durumuna geçer]
+    H -->|Ret| J[Ret nedeni Buyer'a iletilir]
+
+    K[MVP kapsamı:<br/>sipariş oluşturma, gönderme,<br/>kabul / ret, temel durum takibi]
+    L[Kapsam dışında:<br/>sevkiyat, ASN, mal kabul,<br/>fatura ve ödeme]
+    K -.-> F
+    L -.-> I
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef note fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    class A,C,D,E,F,G,I,J process
+    class B,H decision
+    class K,L note

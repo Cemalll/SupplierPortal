@@ -1,0 +1,21 @@
+flowchart LR
+    A[Kullanıcı giriş yapar] --> B[Kimlik doğrulanır]
+    B --> C[Yetki ve erişim kapsamı çözülür]
+    C --> D{Kullanıcının görünümü}
+    D -->|Satın alma yetkisi| E[Satın Alma Ekibi Görünümü]
+    D -->|Tedarikçi üyeliği| F[Tedarikçi Görünümü]
+    D -->|Sistem yönetimi yetkisi| G[Portal Yöneticisi Görünümü]
+
+    C -.-> H[Access Profile<br/>Ne yapabilir?]
+    C -.-> I[Access Scope<br/>Nerede yapabilir?]
+    C -.-> J[Approval Authority<br/>Ne kadar onaylayabilir?]
+    C -.-> K[Audit<br/>Kim, ne, ne zaman?]
+
+    G -. "Otomatik Buyer yetkisi vermez" .-> E
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef note fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    class A,B,C,E,F,G process
+    class D decision
+    class H,I,J,K note

@@ -1,0 +1,30 @@
+flowchart TD
+    A[Seçim sonucu onaya gönderilir] --> B[Access Profile kontrolü]
+    B --> C[Approval Authority kontrolü]
+    C --> D{Yetki uygun mu?}
+    D -->|Hayır| E[İşlem reddedilir veya yetkili kullanıcıya yönlendirilir]
+    D -->|Evet| F[1. seviye onay]
+
+    F --> G{Karar}
+    G -->|Reddet| H[Süreç reddedilir]
+    G -->|Düzeltmeye gönder| I[Buyer sonucu düzeltir] --> A
+    G -->|Onayla| J{2. seviye gerekli mi?}
+
+    J -->|Hayır| K[Seçim kesinleşir]
+    J -->|Evet| L[2. seviye onay]
+    L --> M{Karar}
+    M -->|Reddet| H
+    M -->|Düzeltmeye gönder| I
+    M -->|Onayla| K
+
+    N[Kontrol alanları:<br/>Süreç tipi, Legal Entity,<br/>maksimum tutar, onay seviyesi,<br/>geçerlilik tarihi]
+    N -.-> C
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef rejected fill:#FEE2E2,stroke:#DC2626,color:#7F1D1D
+    classDef note fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    class A,B,C,E,F,I,K,L process
+    class D,G,J,M decision
+    class H rejected
+    class N note

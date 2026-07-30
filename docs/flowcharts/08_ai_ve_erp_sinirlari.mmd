@@ -1,0 +1,36 @@
+flowchart LR
+    subgraph AI[AI destekli ekranlar]
+        A1[Tedarikçi başvurusu<br/>Belge okuma + mükerrer aday]
+        A2[Teklif değerlendirme<br/>Özet + fark analizi]
+        A3[Sipariş takibi<br/>Gecikme riski uyarısı]
+        A4[Supplier başvurusu<br/>Form-belge tutarsızlığı]
+    end
+
+    U[Yetkili kullanıcı]
+    A1 --> U
+    A2 --> U
+    A3 --> U
+    A4 --> U
+    U --> D[Nihai karar]
+
+    subgraph ERP[Gelecekte ERP entegrasyonu]
+        P[Supplier Portal] --> I[Integration Service]
+        I --> E[ERP]
+        P -->|Tedarikçi aktarımı| I
+        P -->|Anlaşma aktarımı| I
+        P -->|Sipariş aktarımı| I
+    end
+
+    R[AI öneri, özet ve uyarı üretir.<br/>Nihai karar kullanıcıdadır.]
+    R -.-> U
+    S[REST / SOAP, alan eşleştirme ve<br/>çift yönlü aktarım teknik tasarımda netleşir.]
+    S -.-> I
+
+    classDef ai fill:#FCE7F3,stroke:#DB2777,color:#831843
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef system fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    classDef note fill:#FEF3C7,stroke:#D97706,color:#78350F
+    class A1,A2,A3,A4 ai
+    class U,D,P,E process
+    class I system
+    class R,S note

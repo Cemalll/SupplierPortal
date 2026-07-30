@@ -1,0 +1,32 @@
+flowchart TD
+    A[Yeni RFQ oluştur] --> B{Satın alma türü}
+    B -->|Tek seferlik| C[Tek seferlik satın alma]
+    B -->|Dönemsel / tekrarlı| D[Anlaşma bazlı satın alma]
+    C --> E[RFQ kalemlerini oluştur]
+    D --> E
+
+    E --> F{Kalem giriş yöntemi}
+    F -->|Katalog| G[Katalogdan ürün veya hizmet seç]
+    F -->|Serbest giriş| H[Serbest ürün veya hizmet gir]
+    G --> I[Davet edilecek tedarikçileri seç]
+    H --> I
+
+    I --> J[Teklif açılma ve revizyon kurallarını belirle]
+    J --> K{Değerlendirme yöntemi}
+    K -->|Basit karşılaştırma| L[Standart teklif alanlarını karşılaştır]
+    K -->|Ağırlıklı değerlendirme| M[Kriterleri ve ağırlıkları belirle]
+
+    L --> N[Sistem doğrulaması]
+    M --> N
+    N --> O{Doğrulama başarılı mı?}
+    O -->|Hayır| P[Hataları düzelt] --> A
+    O -->|Evet| Q[Ağırlıklı kriterleri kilitle]
+    Q --> R[RFQ'yu yayınla]
+    R --> S[Tedarikçilere davet ve bildirim gönder]
+
+    classDef process fill:#E8F1FF,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+    classDef system fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    class A,C,D,E,G,H,I,J,L,M,P,R,S process
+    class B,F,K,O decision
+    class N,Q system
