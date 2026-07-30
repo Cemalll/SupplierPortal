@@ -1,37 +1,47 @@
 flowchart LR
-    subgraph SUPPLIER[Tedarikçi]
-        S1[RFQ davetini görüntüler]
-        S2[Teklif hazırlar]
-        S3[Fiyat, teslimat, ticari koşul ve belgeleri girer]
-        S4[Teklifi gönderir]
-        S5{Son tarih geçti mi?}
-        S6[Revizyon oluşturur]
+
+    subgraph SUPPLIER["Tedarikçi"]
+        S1["RFQ davetini görüntüler"]
+        S2["Teklifi hazırlar"]
+        S3["Fiyat, teslimat, ticari koşul ve belgeleri girer"]
+        S4["Teklifi gönderir"]
+        S5{"Revizyona izin var mı?"}
+        S6["Yeni teklif revizyonu oluşturur"]
     end
 
-    subgraph SYSTEM[Sistem]
-        Y1[Teklif sürümünü kaydeder]
-        Y2{Teklif açılma politikası}
-        Y3[Teklif Buyer tarafından hemen görülebilir]
-        Y4[Teklif son tarihe kadar mühürlü tutulur]
-        Y5[Son tarihte teklifler toplu açılır]
-        Y6[Önceki sürümü korur]
+    subgraph SYSTEM["Sistem"]
+        Y1["Teklif sürümünü kaydeder"]
+        Y2["Önceki sürümleri korur"]
+        Y3{"Teklif açılma politikası"}
+        Y4["Teklifi Buyer'a hemen gösterir"]
+        Y5["Teklif içeriğini mühürlü tutar"]
+        Y6{"Son teklif tarihi geldi mi?"}
+        Y7["Teklif ve revizyon dönemini kapatır"]
+        Y8["Mühürlü teklifleri topluca açar"]
     end
 
-    subgraph BUYER[Satın Alma Ekibi]
-        B1[Değerlendirmeyi başlatır]
+    subgraph BUYER["Satın Alma Ekibi"]
+        B1["Teklifleri değerlendirmeye başlar"]
     end
 
-    S1 --> S2 --> S3 --> S4 --> Y1 --> S5
-    S5 -->|Hayır ve revizyona izin var| S6 --> Y6 --> Y1
-    S5 -->|Evet veya revizyon kapalı| Y2
-    Y2 -->|Gönderildiğinde görünür| Y3 --> B1
-    Y2 -->|Son tarihte açılır| Y4 --> Y5 --> B1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> Y1
+    Y1 --> Y2
+    Y2 --> Y3
 
-    classDef buyer fill:#DBEAFE,stroke:#2563EB,color:#172554
-    classDef supplier fill:#DCFCE7,stroke:#16A34A,color:#14532D
-    classDef system fill:#F3E8FF,stroke:#9333EA,color:#581C87
-    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
-    class B1 buyer
-    class S1,S2,S3,S4,S6 supplier
-    class Y1,Y3,Y4,Y5,Y6 system
-    class S5,Y2 decision
+    Y3 -- "Gönderildiğinde görünür" --> Y4
+    Y3 -- "Son tarihte açılır" --> Y5
+
+    Y4 --> Y6
+    Y5 --> Y6
+
+    Y6 -- "Hayır" --> S5
+    S5 -- "Evet" --> S6
+    S6 --> Y1
+    S5 -- "Hayır" --> Y6
+
+    Y6 -- "Evet" --> Y7
+    Y7 --> Y8
+    Y8 --> B1
