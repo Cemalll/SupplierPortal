@@ -31,7 +31,7 @@ flowchart TD
     S -->|Teslim tarihi geçti ve sipariş açık| U["Gecikme bildirimi oluşturulur"]
     S -->|Tamamlandı| V["Sipariş tamamlanır"]
 
-    W["Gelecek faz AI desteği:<br/>geçmiş tedarikçi performansı ve güncel verilerle<br/>teslim tarihi gelmeden gecikme riski tahmini"] -.-> Q
+    W["Geçmiş tedarikçi performansı ve güncel verilerle<br/>teslim tarihi gelmeden gecikme riski tahmini"] -.-> Q
     X["AI yalnız öngörü ve uyarı üretir;<br/>operasyonel karar kullanıcıdadır"] -.-> W
 
     Y["MVP kapsamı:<br/>sipariş oluşturma, gönderme,<br/>teyit ve temel durum takibi"] -.-> I
