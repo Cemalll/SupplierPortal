@@ -1,46 +1,21 @@
 flowchart LR
+    A["Fiyat, teslimat, ticari koşullar ve belgelerle teklifini hazırlar"]
+    B["Teklifi gönderir"]
+    C["Teklif sürümünü kaydeder"]
+    D["Önceki sürümleri korur"]
+    E{"Teklif açılma politikası"}
 
-    subgraph SUPPLIER["Tedarikçi"]
-        S1["RFQ davetini görüntüler"]
-        S2["Fiyat, teslimat, ticari koşullar ve belgelerle teklifini hazırlar"]
-        S3["Teklifi gönderir"]
-        S4{"Revizyona izin var mı?"}
-        S5["Yeni teklif revizyonu oluşturur"]
-    end
+    A --> B --> C --> D --> E
 
-    subgraph SYSTEM["Sistem"]
-        Y1["Teklif sürümünü kaydeder"]
-        Y2["Önceki sürümleri korur"]
-        Y3{"Teklif açılma politikası"}
-        Y4["Teklifi Buyer'a hemen gösterir"]
-        Y5["Teklif içeriğini mühürlü tutar"]
-        Y6{"Son teklif tarihi geldi mi?"}
-        Y7["Teklif ve revizyon dönemini kapatır"]
-        Y8["Mühürlü teklifleri topluca açar"]
-    end
+    F["Tedarikçi teklifini değiştirmek ister"]
+    G{"Son teklif tarihi geçmedi mi?"}
+    H{"Revizyona izin var mı?"}
+    I["Yeni teklif sürümünü hazırlar"]
+    J["Teklif değiştirilemez"]
 
-    subgraph BUYER["Satın Alma Ekibi"]
-        B1["Teklifleri değerlendirmeye başlar"]
-    end
-
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-    S4 --> Y1
-    Y1 --> Y2
-    Y2 --> Y3
-
-    Y3 -- "Gönderildiğinde görünür" --> Y4
-    Y3 -- "Son tarihte açılır" --> Y5
-
-    Y4 --> Y6
-    Y5 --> Y6
-
-    Y6 -- "Hayır" --> S5
-    S5 -- "Evet" --> S6
-    S6 --> Y1
-    S5 -- "Hayır" --> Y6
-
-    Y6 -- "Evet" --> Y7
-    Y7 --> Y8
-    Y8 --> B1
+    F --> G
+    G -- "Evet" --> H
+    G -- "Hayır" --> J
+    H -- "Evet" --> I
+    H -- "Hayır" --> J
+    I --> B
