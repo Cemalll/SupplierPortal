@@ -1,21 +1,88 @@
 flowchart LR
-    A["Fiyat, teslimat, ticari koşullar ve belgelerle teklifini hazırlar"]
-    B["Teklifi gönderir"]
-    C["Teklif sürümünü kaydeder"]
-    D["Önceki sürümleri korur"]
-    E{"Teklif açılma politikası"}
+    subgraph SUPPLIER["Tedarikçi"]
+        direction TB
 
-    A --> B --> C --> D --> E
+        S1["RFQ davetini ve kurallarını inceler"]
+        S2{"Teklif verecek mi?"}
+        S3["Fiyat, teslimat, ticari koşullar ve belgelerle teklifini hazırlar"]
+        S4["Teklifi gönderir"]
 
-    F["Tedarikçi teklifini değiştirmek ister"]
-    G{"Son teklif tarihi geçmedi mi?"}
-    H{"Revizyona izin var mı?"}
-    I["Yeni teklif sürümünü hazırlar"]
-    J["Teklif değiştirilemez"]
+        S5["Teklifini değiştirmek ister"]
+        S6["Yeni teklif sürümünü hazırlar"]
 
-    F --> G
-    G -- "Evet" --> H
-    G -- "Hayır" --> J
-    H -- "Evet" --> I
-    H -- "Hayır" --> J
-    I --> B
+        S7["Katılmama cevabı gönderir"]
+    end
+
+    subgraph SYSTEM["Sistem"]
+        direction TB
+
+        Y1["Gönderim öncesi teklif doğrulaması yapar"]
+        Y2{"Doğrulama başarılı mı?"}
+        Y3["Eksik veya hatalı alanları gösterir"]
+
+        Y4["Teklif sürümünü kaydeder"]
+        Y5["Önceki teklif sürümlerini korur"]
+        Y6{"Teklif açılma politikası"}
+
+        Y7{"Son teklif tarihi geçmedi mi?"}
+        Y8{"RFQ revizyona izin veriyor mu?"}
+        Y9["Teklif değiştirilemez"]
+
+        Y10["Teklif dönemini kapatır"]
+        Y11["Kapalı tekliflerin içeriğini açar"]
+
+        Y12["Katılmama durumunu kaydeder"]
+    end
+
+    subgraph BUYER["Satın Alma Ekibi"]
+        direction TB
+
+        B1["Teklifin gönderildiği bilgisini görür"]
+        B2["Teklif içeriğini görüntüler"]
+        B3["Tedarikçinin katılmayacağını görür"]
+    end
+
+    S1 --> S2
+
+    S2 -- "Evet" --> S3
+    S3 --> S4
+    S4 --> Y1
+
+    Y1 --> Y2
+    Y2 -- "Hayır" --> Y3
+    Y3 --> S3
+
+    Y2 -- "Evet" --> Y4
+    Y4 --> Y5
+    Y5 --> Y6
+
+    Y6 -- "Gönderildiğinde görünür" --> B2
+    Y6 -- "Son tarihte açılır" --> B1
+
+    Y4 -. "Tedarikçi daha sonra değişiklik yapmak isterse" .-> S5
+    S5 --> Y7
+
+    Y7 -- "Hayır" --> Y9
+    Y7 -- "Evet" --> Y8
+
+    Y8 -- "Hayır" --> Y9
+    Y8 -- "Evet" --> S6
+    S6 --> S4
+
+    Y6 -- "Son teklif tarihi geldiğinde" --> Y10
+    Y10 --> Y11
+    Y11 --> B2
+
+    S2 -- "Hayır" --> S7
+    S7 --> Y12
+    Y12 --> B3
+
+    classDef supplier fill:#FFF7D6,stroke:#D6A600,color:#4A3900
+    classDef system fill:#F3E8FF,stroke:#9333EA,color:#581C87
+    classDef buyer fill:#DBEAFE,stroke:#2563EB,color:#172554
+    classDef decision fill:#FEF3C7,stroke:#D97706,color:#78350F
+
+    class S1,S3,S4,S5,S6,S7 supplier
+    class Y1,Y3,Y4,Y5,Y9,Y10,Y11,Y12 system
+    class B1,B2,B3 buyer
+    class S2,Y2,Y6,Y7,Y8 decision
